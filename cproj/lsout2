@@ -1,0 +1,9 @@
+total 240
+-rwxr-xr-x  1 limjunhyuk  staff  49954  9 11 22:21 a.out
+-rw-r--r--  1 limjunhyuk  staff  55296  9 11 21:56 archieve.tar
+-rwxr--r--@ 2 limjunhyuk  staff    164  9 11 22:20 link_hello.c
+-rwxr--r--@ 2 limjunhyuk  staff    164  9 11 22:20 link_link_hello.c
+-rw-r--r--  1 limjunhyuk  staff      0  9 12 01:14 lsout
+-rw-r--r--  1 limjunhyuk  staff    610  9 12 01:11 lsout2
+lrwxr-xr-x  1 limjunhyuk  staff      7  9  8 20:14 slink.c -> hello.c
+2021년 9월 12일 일요일 01시 17분 07초 KST
