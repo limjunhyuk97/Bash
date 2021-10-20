@@ -34,3 +34,7 @@ touch "a.c b.c d.c"
 : chmod를 통해서 permission 변경
 : bash '...'.sh를 통해서 subshell을 통해 실행
 
+- 파일명 바꾸기
+- redirection, tee
+- git 연결
+- stderr 만들기
