@@ -341,6 +341,7 @@
 - 0 : stdin, 1 : stdout, 2 : stderr. (각 standard stream에 할당된 File Descriptor라는 양의 정수 번호 사용)
 - **> >> < 기호 좌측 FD 값 공백 없이** 붙혀야 한다.
 - **> >> 기호 우측 FD 값 &** 붙여야 한다.
+- stderr 까지 stdout과 함께 보내고 싶다면, 2>&1 을 사용해야 한다.
 - **> >> < & 사용**
   - **> (파일 명)**: **명령의 결과물을 파일로 내보낸다.**
   - **>> (파일 명)**: **명령의 결과물을 파일 뒤에 붙힌다.**
@@ -354,6 +355,7 @@
     - (예) cat < lsout : lsout 이라는 파일에 있는 내용을 stdin으로 내보내고, 그것을 cat 명령을 통해 stdout으로 출력한다.
     - (예) cat < lsout > lsout2 : lsout 파일 내용 stdin으로 보냄, cat으로 stdin이 stdout으로 보내짐, stdout 내용이 lsout2로 넣어짐.
   - **<<< (stdin)**: 특정 파일에 stdin으로 어떤 값을 넣어준다.
+    - cat <<< END >> file.txt : stdin을 file.txt에 넣는다.
 
 ### diff: 두 파일의 내용을 비교해서 보여준다
 
