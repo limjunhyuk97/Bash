@@ -1,5 +1,0 @@
-hello
-ls: not_exit.file: No such file or directory
-hahah
-123
-345
