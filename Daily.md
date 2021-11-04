@@ -73,27 +73,27 @@
 - ubuntu vm 생성 -> terminal에서 sshd 서버환경을 위한 다운로드 -> terminal에서 httpsd 서버환경을 위한 apache 다운로드 -> index.html 페이지 변경
 
 ### 11.4
-	- sudo su : super user로써 명령할 수 있다.
-	- sudo su 에서 파일을 만들면 root에서 만들었다고 뜬다. 파일이나, 폴더의 삭제에 제약이 생길 수 있다.
-	- apt update : 운영체제에서 사용 가능한 패키지들과 그 버전에 대한 정보를 업데이트하는 명령어다
-	- apt upgrade : 내 컴퓨터에 설치된 프로그램 중 버전이 옛날인 프로그램에 대해서 최신으로 업그레이드 해라
-	- fork, branch, clone 기말고사 출제
-		- fork : 기존 프로젝트를 냅두고, 프로젝트를 복사하여 변경하는 것
-		- branch : 기존 프로젝트 안에서 분기를 나누어서 변경하는 것
-		- clone : 기존의 프로젝트를 복사하는 것
-	- UBUNTU 서버 환경을 위해서 LAMP를 설치할 것이다. (Linux, Apache, MariaDB, Php, Python, Pearl)
-	- systemctl status (apache2, sshd …) : apache의 동작상태를 확인하는 것.
-	- systemctl stop apache2 : apache 서버를 종료함. (Unable to connect)
-	- systemctl start apache2 : apache 서버를 시작함.
-	- MariaDB install
-		- sudo apt install mariadb-server mariadb-client : mariadb 설치
-		- systemctl status mariadb : mariadb 동작상태를 확인하는 것.
-		- sudo mysql_secure_installation : mariadb 관련 설정 (root 비밀번호 등..)
-	- PHP install
-		- sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-json php7.4-opcache php7.4-readline
-		- sudo apt install phpmydmin : PHP myadmin install
-	- 네트워크 카드 여러개를 하나의 apache 서버에 꽂을 수 있다.
-	- virtual web hosting 
-		- 각각의 네트워크 카드(다른 IP 주소 마다) 마다 다른 웹페이지로 호스팅해줄 수 있다.
-		- 
-	- nslookup (webpage 도메인 이름) : 도메인이름에 해당하는 IP주소를 돌려준다. canonical name도 알려준다.
+- sudo su : super user로써 명령할 수 있다.
+- sudo su 에서 파일을 만들면 root에서 만들었다고 뜬다. 파일이나, 폴더의 삭제에 제약이 생길 수 있다.
+- apt update : 운영체제에서 사용 가능한 패키지들과 그 버전에 대한 정보를 업데이트하는 명령어다
+- apt upgrade : 내 컴퓨터에 설치된 프로그램 중 버전이 옛날인 프로그램에 대해서 최신으로 업그레이드 해라
+- fork, branch, clone 기말고사 출제
+	- fork : 기존 프로젝트를 냅두고, 프로젝트를 복사하여 변경하는 것
+	- branch : 기존 프로젝트 안에서 분기를 나누어서 변경하는 것
+	- clone : 기존의 프로젝트를 복사하는 것
+- UBUNTU 서버 환경을 위해서 LAMP를 설치할 것이다. (Linux, Apache, MariaDB, Php, Python, Pearl)
+- systemctl status (apache2, sshd …) : apache의 동작상태를 확인하는 것.
+- systemctl stop apache2 : apache 서버를 종료함. (Unable to connect)
+- systemctl start apache2 : apache 서버를 시작함.
+- MariaDB install
+	- sudo apt install mariadb-server mariadb-client : mariadb 설치
+	- systemctl status mariadb : mariadb 동작상태를 확인하는 것.
+	- sudo mysql_secure_installation : mariadb 관련 설정 (root 비밀번호 등..)
+- PHP install
+	- sudo apt install php7.4 libapache2-mod-php7.4 php7.4-mysql php-common php7.4-cli php7.4-common php7.4-json php7.4-opcache php7.4-readline
+- sudo apt install phpmydmin : PHP myadmin install
+- 네트워크 카드 여러개를 하나의 apache 서버에 꽂을 수 있다.
+- virtual web hosting 
+	- 각각의 네트워크 카드(다른 IP 주소 마다) 마다 다른 웹페이지로 호스팅해줄 수 있다.
+	- 
+- nslookup (webpage 도메인 이름) : 도메인이름에 해당하는 IP주소를 돌려준다. canonical name도 알려준다.
