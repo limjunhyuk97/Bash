@@ -125,14 +125,14 @@
     - etc/skel 에서 홈디렉토리 형성에 필요한 정보를 copy 해옴.
   - adduser (guest 명) 생성 후 확인
     - cd /home/(guest 명)로 새로운 유저의 홈 디렉토리로 접근할 수 있다.
-    - cat /etc/passwd : guest1:x:1001(게스트 번호):1001(그룹 번호)
+    - cat /etc/passwd : guest1: x:1001(게스트 번호):1001(그룹 번호)
 - sudo login (유저명) : 특정 유저로 로그인한다. (root 비번 -> 특정 유저 비번 )
 - 각각의 유저가 자신의 홈 디렉토리에서 만든 디렉토리에 다른 유저 또한 접근할 수 있다.
 - ls -l 을 통해서 누가 그 디렉토리에 접근할 수 있는지 확인할 수 있다.
   - d rwx rwx r-x : 해당 디렉토리 소유한 유저, 해당 유저와 같은 그룹의 멤버, other, root 모두 접근 가능
 - vi /etc/group : group들에 대한 정보를 담고 있다.
 - group :  유저 그룹에 관한 명령어이다.
-  - vi group 을 통해서 group:x:1001:root,guest2 .. 으로 바꾸면 group1에 root, geust2 추가하는 효과
+  - vi group 을 통해서 group: x:1001:root,guest2 .. 으로 바꾸면 group1에 root, geust2 추가하는 효과
   - 하지만 , LINUX 파일시스템에서의 버그로 인해, group 내 파일 정보를 바꾸는 것으로 유저 추가가 groups 명령으로 확인되지 않을 수도 있다.
   - su (현재 게스트명) : 현재 게스트로 다시 로그인해야 현재 게스트가 어떤 그룹에 속하는지 groups 명령어로 확인할 수 있게 된다. 즉, 버그를 해결하는 방법으로 각 유저가 로그인 상태에서 다시 su (게스트명) 명령어 쳐줘야 함.
 - groups : 현재 유저가 속해있는 그룹에 대한 정보를 보여주는 명령어이다.
