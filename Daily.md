@@ -190,3 +190,13 @@
 - apache2ctl configtest : config와 관련된 syntax 오류를 체크할 수 있다.
 - /etc에 사용자에 대한 정보가 담겨 있다.
 - ctrl + r 을 통해서 web page caching 된 정보 외에 새로운 정보를 가져올 수 있다.
+
+### 11.25
+
+- 공식 웹사이트를 만들 수 있는, ‘저작물 관리 시스템’인 wordpress 설치하기 (wordpress install 검색)
+  - 핵심 컨텐츠는 DB로 넣어두고, 데코레이션과 리액션에 대한 내용을 한꺼번에 구성할 수 있게 도와주는 툴.
+- mysql과 mariaDB 똑같음. 똑같은 명령어를 그대로 사용한다.
+- 내 컴퓨터에 서버를 위한 DB 환경을 설치하고, 다른 곳에 존재하는 유저들에게 접근 및 수정권한을 주는 것은 굉장히 위험할 수 있다. 그러므로 permission에 대한 정리가 필요하다.
+- cp -a :  archieve 명령으로 copy를 진행할 시에, owner, group, 변경일자 등에 대한 정보가 하나도 바뀌지 않은 채로 다른 곳으로 복사된다.
+- chown, chmod, chgrp 을 통해서 파일에 대한 접근 권한을 바꿀 수 있다.
+- chown -R www-data:www-data 를 쓰면, owner:gorup 한번에 바꿀 수 있다.
