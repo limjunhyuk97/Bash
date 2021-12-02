@@ -117,6 +117,7 @@
       - man 5 passwd : 5는 파일이라는 뜻이다.
   - home directory : user가 로그인하면, 기본적으로 그 디렉토리에 있는 상태가 된다.
   - user command interpreter : shell이다.
+  - su - (username) : 특정 user로 다시 돌아갈 수 있다.
 - rm  * .c : 현재 디렉토리에 있는 모든 파일을 삭제하고, .c 라는 이름을 갖는 파일과 디렉토리를 모두 삭제한다.
 - adduser : superuser가 할 수 있는 명령. user의 목록을 새로 추가할 수 있다.
   - adduser (guest 명)
@@ -200,3 +201,35 @@
 - cp -a :  archieve 명령으로 copy를 진행할 시에, owner, group, 변경일자 등에 대한 정보가 하나도 바뀌지 않은 채로 다른 곳으로 복사된다.
 - chown, chmod, chgrp 을 통해서 파일에 대한 접근 권한을 바꿀 수 있다.
 - chown -R www-data:www-data 를 쓰면, owner:gorup 한번에 바꿀 수 있다.
+
+### ubuntu server 계정 추가 + ssh 접속 가능하게 만들기
+
+- **출처: https://hays99.tistory.com/117 [Thinking Warehouse]**
+- sudo su 로 root 유저로 변경
+- adduser new_user 로 새로운 유저 추가
+  - /etc/passwd 에 새로운 유저가 추가됨
+  - /home directory에 새로운 유저의 홈 디렉토리가 만들어짐
+- mkdir /home/new_user/.ssh 를 통해서 .ssh 폴더를 생성
+- cp /home/ubuntu/.ssh/authorized_keys /home/new_user/.ssh (ubuntu 환경 시에) 를 통해서 authorized_key 파일을 복사
+- chown -R new_user:new_user /home/new_user/.ssh 를 통해서 권한을 변경
+- systemctl restart ssh 또는 service ssh restart 를 통해서 ssh 서비스 재시작
+- usermod -aG sudo new_user (ubuntu) 를 통해서 권한 주기
+- sudo chmod 640 /etc/sudoers 를 통해서 sudoers 파일 등록 (sudo 유저로써 등록하는 것. 안해도 됨)
+  - sudo vi/etc/sudoers
+    - root ALL=(ALL:ALL) ALL
+    - new_user ALL=(ALL:ALL) ALL
+- password 묻지 않도록 설정
+  - $ sudo su -
+  - $ sudo cp /etc/sudoers.d/90-cloud-init-users /etc/sudoers.d/90-mysudoer
+  - $ sudo chmod 640 /etc/sudoers.d/90-mysudoer
+  - $ sudo vi /etc/sudoers.d/90-mysudoer
+    - new_user ALL=(ALL) NOPASSWD:ALL
+  - $ sudo chmod 440 /etc/sudoers.d/90-mysudoer
+- ssh 접속 시에 pem 키 없이 비밀번호를 접속하도록 설정
+  - $ sudo vi /etc/ssh/sshd_config
+    - PasswordAuthentication : yes  로 변경 (기존 no)
+  - $ sudo systemctl restart ssh     (sudo service ssh restart)  (ubuntu)
+
+### 12.02
+- df : 어떤 디스크가 사용되고 있나 확인하는 명령어
+- ps -ef | grep [regex] : 실행중인 프로세스 중 regex 가 포함된 프로세스
