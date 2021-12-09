@@ -204,7 +204,7 @@
 
 ### ubuntu server 계정 추가 + ssh 접속 가능하게 만들기
 
-- **출처: https://hays99.tistory.com/117 [Thinking Warehouse]**
+- **출처: <https://hays99.tistory.com/117> [Thinking Warehouse]**
 - sudo su 로 root 유저로 변경
 - adduser new_user 로 새로운 유저 추가
   - /etc/passwd 에 새로운 유저가 추가됨
@@ -231,5 +231,29 @@
   - $ sudo systemctl restart ssh     (sudo service ssh restart)  (ubuntu)
 
 ### 12.02
+
 - df : 어떤 디스크가 사용되고 있나 확인하는 명령어
 - ps -ef | grep [regex] : 실행중인 프로세스 중 regex 가 포함된 프로세스
+
+### 12.9
+
+- adduser 하면 /etc/passwd 바뀐다고 할 때, etc 앞에 root를 까먹지 말자.
+- 무엇인가 공부하기 전에 그것이 무엇인지 정확히 정의하는 것이 중요하다 : 위키에서 찾아보는 것 좋다.
+- webmin : Unix 계열 시스템을 위한 웹 기반 시스템 구성 도구이다.
+- debian : 데비안 프로젝트가 개발한 자유 컴퓨터 운영체제. 우분투에서도 데비안 파일을 그대로 사용할 수 있다.
+  - .deb 의 확장자를 갖는다.
+  - sudo dpkg -i 확장자명.deb 으로 .deb 파일 실행 가능
+    - '-i' 는 install의 약자
+- ubuntu20.04 webmin install
+  - dependency problem : 어떤 파일을 설치하기 위한 tool이 선행되어 설치되어있지 않은 경우에 발생한다.
+  - webmin 은 perl(libio-pty-perl)을 선행으로 요구한다.
+- SSL mode : 전송계층보안. 컴퓨터 네트워크에 통신보안을 제공하기 위해 설계된 암호 규약.
+- .log
+  - 에러, 접속, 등에 대한 기록을 담고 있는 파일 
+  - /var 하위에 존재한다 : /var 에 있는 파일들은 파일 사이즈에 변동이 있을 수 있는 파일들이다.
+- cron : 유닉스 계열 컴퓨터 운영체제의 시간 기반 잡 스케줄러이다.
+- Biz Model Canvas 작성하는 연습하기 - 이런 주제를 갖는 item 이라면 어떤 biz model을 갖고 있을까 생각.
+- GitLab, GitHub twin editing을 통해서 sync 맞출 수 있다.
+  - GitLab GitHub API 사용가능
+  - transifix 번역 전 상태 받아보고, 그 뒤의 상태 내가 한거 서로 비교 가능하도록 함.
+  - Magenta
