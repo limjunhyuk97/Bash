@@ -417,8 +417,12 @@
 ### which : 특정 명령어가 어떤 디렉토리에 들어있는 명령어인지 알려준다
 
 - which로 찾았을 때 나오지 않으면 shell에 기본으로 들어있는 명령어이다. (which 명령어)
-  - (예) which df :
-- shell에 기본적으로 들어있는 명령어에 대해서 찾으려면 which bash를 통해서 찾는다. (which bash)
+  - (예) which df : df 명령어가 어떤 디렉토리에 들어있는지
+  - (예) which java
+  - (예) which python
+- shell에 기본적으로 들어있는 명령어들의 위치에 대해서 찾으려면 which bash를 통해서 찾는다. (which bash)
+  - (예) which bash
+- which -a find : 검색가능한 모든 경로에서 해당 명령어를 찾는다.
 
 ### df : (disk free) 리눅스 시스템 전체의 디스트 사용량을 나타낸다
 
