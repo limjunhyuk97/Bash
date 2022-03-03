@@ -1,6 +1,18 @@
-## LINUX_COMMAND, VIM editor, Shell script
+# Linux
 
-## Tips
+## Linux 구조
+
+- Shell(Bash) > System Utility > System Call > Kernel
+- **Bash는..**
+  - **GNU(공개 소프트웨어 프로젝트) OS를 위한 명령어 인터프리터 이고, Shell**이다.
+  - sh 파일과 호환가능하다. 즉, shell script 언어와 호환가능하다.
+- **Shell은..**
+  - 명령을 실행시키는 **macro processor**이다. macro processor는 텍스트와 기호를 확장하여 더 큰 표현을 만드는 기능을 의미함.
+  - **GNU utility set에 사용자 인터페이스를 제공**한다. 프로그래밍 언어기능으로 utility set을 결합할 수 있다.
+  - **명령이 포함된 파일을 작성하여 새로운 명령을 정의**할 수 있다.
+
+
+## TIPS
 
 #### 1. 터미널에서 cpp 컴파일이 진행되지 않을 경우 확인해볼 것
 
