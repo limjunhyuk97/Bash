@@ -29,3 +29,14 @@ gcc --version
 // gcc version 업데이트
 brew install gcc --HEAD
 ```
+
+#### 2. c 파일의 컴파일
+
+```sh
+gcc -o 컴파일후파일명 파일.c
+```
+
+#### 3. 마운트
+
+- 실제 공간인 디스크를 사용하기 위해 현재 운영체제에 연결하는 것 (장치와 파일의 연결 / 디스트와 디렉토리의 연결) 
+- Linux 는 Window 와는 다르게 하나의 root 에서 뻗어나가는 single directory tree 구조의 파일 시스템 갖는다.

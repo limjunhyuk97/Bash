@@ -2,6 +2,8 @@
 
 - [reference](https://mug896.github.io/bash-shell/quotes.html)
 
+
+
 ## 1. Quote의 용도
 
 - shell 에서는 number와 string을 구분하기 위해 '', "" 사용하는 것 아니다.
@@ -41,6 +43,8 @@ ls "-lai"
 'ls' "-ail"
 ```
 
+
+
 ## 2. 특수 기능을 갖는 문자들
 
 문자 | 기능
@@ -68,9 +72,12 @@ echo hello '&'
 echo hello world | tr ' ' '\'n
 ```
 
+
+
 ## 3. No Quote
 
-- 기본적으로 no qoute 상태에서 모든 문자가 escape 된다!
+- quote 상태 X : escape O
+- quote 상태 O : escape X
 
 ```sh
 # abcd !@$%^&*(){}[]<>/\
@@ -138,9 +145,11 @@ regex=\w\h\h
 echo $regex
 ```
 
+
+
 ## 4. Double Quote (" ")
 
-- 내부에서 특수기능을 하는 문자들($, `, !)이 해석되어 실행된다.
+- 내부에서 **특수기능을 하는 문자들($, `, !)이 해석되어 실행**된다.
 - 내부에서 공백과 개행이 유지된다.
 
 ```sh
@@ -157,6 +166,7 @@ echo $AA
 ### 4.1 double quote에서 escape 할 수 있는 문자
 
 - **" $ ₩ \ newline** 은 \로 escape 할 수 있다.
+- ! 를 이용한 command history 확장 또한 일어난다.
 
 ```sh
 # single qoute : quote \(개행)single
@@ -166,4 +176,67 @@ single'
 # double qoute : quotedouble
 echo "quote\
 double"
+```
+
+### 4.2 array와 quote
+
+- ${arr[@]} : "${arr[0]}" "${arr[1]}" "${arr[2]}" ...
+- ${arr[\*]} : "${arr[0]}X${arr[1]}X${arr[2]}X..."
+  - X = $IFS 변수값의 첫 번째 문자
+
+### 4.3 null 변수("")에 대한 quote
+
+- 변수 확장의 측면
+  - **$변수**로 변수확장 : null로 들어감
+  - **"$변수"**로 변수확장 : 공백("")으로 들어가서 문제 발생시킬 수 있음
+  - 내가 쓰는 zsh에서는 quote 하든, 안하든 null로 들어가는 것 같김 함..
+
+```sh
+# args.sh
+echo "All params = $@"
+
+echo "Loop All params!"
+for i in $@
+		do
+				echo "$i"
+		done
+```
+
+
+
+## 5. Single Quote ('')
+
+- 문자들을 있는 그대로 표시한다.
+- escape 따위도 일어나지 않는다.
+
+```sh
+$ echo '$AA world 
+> `date` 
+> \$AA
+> '
+$AA world 
+`date` 
+\$AA
+```
+
+- 대신 안에서 ' 쓰려면 : '(문자열..)' + \\' + '(문자열..)' 
+
+```sh
+$ echo 'foo'\''bar'
+foo'bar
+
+$ echo 'foo'"'"'bar'
+foo'bar
+```
+
+### 5.1 command string / trap handler에서 사용
+
+```sh
+AA=100
+
+$ sh -c "AA=200; echo $AA"
+100
+
+$ sh -c 'AA=200; echo $AA'
+200
 ```

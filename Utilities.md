@@ -39,17 +39,72 @@
   - 즉, **Terminal이 시작되면 login 프로그램이 실행되고, Shell이 실행되고, prompt를 보여준다.**
     - Git Bash: Terminal 안에서 실행되는 Git Bash Shell 프로그램
     - Cygwin64 Terminal : Cygwin64 Terminal안에서 실행되는 Bash Shell 프로그램
-- standard stream
-  - stdin : keyboard 통한 입력
-  - stdout : display 통한 명령 결과 출력
-  - stderr : display 통한 에러 출력
-  - 각각 양의 정수번호(File Descriptor, FD)에 의해 처리되는데, stdin 0, stdout 1, stderr 2의 번호로 처리된다.
 
 
 
 
 
-## Linux 파일 시스템(Directory 구조)
+## File Descriptor 와 OS
+
+### 표준 입출력 장치와 FD
+
+- OS는 프로그램이 실행되면, 프로그램에게 3개의 기본 파일 디스크립터를 할당해준다.
+  - stdin / standard input : 0 (FD number)
+  - stdout / standard output : 1 (FD number)
+  - stderr / standard error : 2 (FD number)
+  - OS 가 어디로 입력받고, 어디로 연산결과와 에러를 출력할 지를 기본적으로 정해주는데 그것이 표준입출력장치.
+  - 표준입출력 장치는 기본적으로 키보드와 모니터이다.
+
+### 그럼 표준 입출력을 변경할 수 있는가?
+
+- **Redirection** / **Pipe**로 변경 가능
+
+#### Redirection
+
+- **표준 입력의 변경 <**
+- 아래의 shell script는 **표준입력을 키보드에서가 아니라, /etc/hosts 라는 파일에서 받아들이라는 것**
+
+```sh
+$ cat < /etc/hosts
+
+# cat의 stdin을 /etc/hosts로 정함
+```
+
+- **표준 출력의 변경 >**
+- 아래의 shell script는 **표준출력을 모니터로가 아니라, /dev/null 이라는 파일로 보내라는 것**
+
+```sh
+$ cat /tmp/error.txt > /dev/null
+
+# cat의 stdin을 /tmp/error.txt, stdout을 /dev/null로 정함
+```
+
+### 하지만 표준 파일 디스크립터에는 출력이 2종류다!
+
+- **표준 에러, 표준 출력의 2경우에 대해서 모두 처리가 요구된다.**
+- 아래의 shell script는 표준 출력의 경우에 대한 redirection을 수행중이다.
+
+```sh
+$ cat /tmp/error.txt 1> /dev/null
+
+# cat의 stdin을 /tmp/error.txt, stdout을 /dev/null로 정함
+# 1>을 통해서 stdin을 stdout으로 내보내기로 함
+```
+
+- 아래의 shell script는 표준출력과 표준에러 모두에 대해 redirection을 수행중이다.
+
+```sh
+cat /tmp/error.txt > /dev/null 2>&1
+
+# cat의 stdin을 /tmp/error.txt, stdout을 /dev/null로 정함
+# 2>&1 을 통해서 stderr를 stdin으로 보내기로 했고, stdin을 stdout으로 보내기로 했다.
+```
+
+
+
+
+
+## Linux 파일 시스템 구조
 
 - /(슬래쉬)로 구분되어있다.
 - .으로 시작하는 이름을 가진 파일이나 디렉토리는 숨겨진 디렉토리이다.
@@ -63,7 +118,7 @@
 
 
 
-## Linux 파일 권한
+## Linux 파일 시스템 권한
 
 ### Linux 파일 시스템과 접근 권한
 

@@ -1,5 +1,10 @@
 #!/bin/bash
 
-echo arg1 : "$1"
-echo arg2 : "$2"
+echo "All params = $@"
+
+echo "Loop All params!"
+for i in $@
+		do
+				echo "$i"
+		done
 
