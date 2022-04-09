@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <errno.h>
 
 #include <string.h>
@@ -24,6 +25,13 @@
 #include "types.h"
 #include "list_head.h"
 #include "parser.h"
+
+LIST_HEAD(history);
+
+struct block {
+    struct list_head list;
+    char *command;
+};
 
 
 /***********************************************************************
@@ -40,20 +48,102 @@
  */
 static int run_command(int nr_tokens, char *tokens[])
 {
-	if (strcmp(tokens[0], "exit") == 0) return 0;
-
-	fprintf(stderr, "Unable to execute %s\n", tokens[0]);
-	return -EINVAL;
+    int stat, result = 0;
+    pid_t waitPID, PID = fork();
+    
+    // parent process
+    if(PID > 0) {
+        
+        // get exit code
+        waitPID = wait(&stat);
+        
+        // error occured in child process + exit status
+        if(stat > 0) fprintf(stderr, "Unable to execute %s\n", tokens[0]);
+        
+        // exit
+        if(strcmp(tokens[0], "exit") == 0) waitPID = 0;
+        
+        // cd
+        else if(strcmp(tokens[0], "cd") == 0){
+            char *curloc = getenv("HOME");
+            if(nr_tokens == 1) {
+                result = chdir(curloc);
+            }
+            else {
+                if(tokens[1][0] == '~'){
+                    char *curdir = (char *)malloc(sizeof(char) * 200), *curloc = getenv("HOME");
+                    strcpy(curdir, curloc);
+                    int token_len = (int)strlen(tokens[1]);
+                    for(int i=1; i<token_len; ++i) {
+                        tokens[1][i-1] = tokens[1][i];
+                    }
+                    tokens[1][token_len-1] = '\0';
+                    strcat(curdir, tokens[1]);
+                    result = chdir(curdir);
+                    free(curdir);
+                }
+                else {
+                    result = chdir(tokens[1]);
+                }
+            }
+        }
+        
+        // history
+        else if(strcmp(tokens[0], "history") == 0) {
+            int index = 0;
+            if(!list_empty(&history)) {
+                struct block * cur = list_last_entry(&history, struct block, list);
+                while(&history != &cur->list) {
+                    fprintf(stderr, "%2d: %s", index, cur->command);
+                    index += 1;
+                    cur = list_prev_entry(cur, list);
+                }
+            }
+        }
+        
+        // !
+        else if(strcmp(tokens[0], "!") == 0) {
+            int target = atoi(tokens[1]), index = 0, result = -1;
+            if(!list_empty(&history)) {
+                struct block * cur = list_last_entry(&history, struct block, list);
+                while(&history != &cur->list && index != target) {
+                    index += 1;
+                    cur = list_prev_entry(cur, list);
+                }
+                if(index == target) {
+                    if (parse_command(cur->command, &nr_tokens, tokens) == 0) result = 1;
+                    else return run_command(nr_tokens, tokens);
+                }
+            }
+        }
+        
+        // error handling
+        if(result < 0) fprintf(stderr, "Unable to execute commands\n");
+        
+        return waitPID;
+    }
+    
+    // child process
+    else if(PID == 0){
+        
+        // cd, exit, history, ! : chdir() 정상=0 / 에러=-1
+        if(strcmp(tokens[0], "cd") == 0 || strcmp(tokens[0], "exit") == 0) result = 0;
+        if(strcmp(tokens[0], "history") == 0 || strcmp(tokens[0], "!") == 0) result = 0;
+        // execvp 에러=-1 / 정상>0
+        else result = execvp(tokens[0], tokens);
+        
+        // exit 정상=0 / 에러=1
+        if(result <0) exit(EXIT_FAILURE);
+        else exit(EXIT_SUCCESS);
+    }
+    
+    // other cases
+    else{
+        fprintf(stderr, "Process Execution Error");
+        return ECHILD;
+    }
+    
 }
-
-
-/***********************************************************************
- * struct list_head history
- *
- * DESCRIPTION
- *   Use this list_head to store unlimited command history.
- */
-LIST_HEAD(history);
 
 
 /***********************************************************************
@@ -65,7 +155,19 @@ LIST_HEAD(history);
  */
 static void append_history(char * const command)
 {
-
+    // Constructing node
+    struct block * node = (struct block *)malloc(sizeof(struct block));
+    
+    // Copying command
+    node->command = (char *)malloc(sizeof(char) * MAX_COMMAND_LEN);
+    strcpy(node->command, command);
+    
+    // initializing list
+    INIT_LIST_HEAD(&(node->list));
+    
+    // Add node to history
+    list_add(&(node->list), &history);
+    
 }
 
 
